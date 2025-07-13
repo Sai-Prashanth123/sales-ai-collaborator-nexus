@@ -16,6 +16,21 @@ import {
   ArrowRight
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { 
+  LineChart, 
+  Line, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  Legend
+} from "recharts";
 
 const Dashboard = () => {
   const kpis = [
@@ -139,6 +154,35 @@ const Dashboard = () => {
     }
   ];
 
+  // Chart data
+  const revenueData = [
+    { month: 'Jan', revenue: 85000, target: 90000 },
+    { month: 'Feb', revenue: 92000, target: 95000 },
+    { month: 'Mar', revenue: 108000, target: 100000 },
+    { month: 'Apr', revenue: 115000, target: 110000 },
+    { month: 'May', revenue: 127000, target: 120000 },
+    { month: 'Jun', revenue: 134000, target: 125000 }
+  ];
+
+  const meetingData = [
+    { day: 'Mon', meetings: 8, successful: 6 },
+    { day: 'Tue', meetings: 12, successful: 9 },
+    { day: 'Wed', meetings: 15, successful: 11 },
+    { day: 'Thu', meetings: 10, successful: 8 },
+    { day: 'Fri', meetings: 14, successful: 12 },
+    { day: 'Sat', meetings: 6, successful: 4 },
+    { day: 'Sun', meetings: 4, successful: 3 }
+  ];
+
+  const conversionData = [
+    { name: 'Qualified Leads', value: 65, color: '#3b82f6' },
+    { name: 'Contacted', value: 45, color: '#10b981' },
+    { name: 'Meetings Scheduled', value: 28, color: '#f59e0b' },
+    { name: 'Deals Closed', value: 12, color: '#ef4444' }
+  ];
+
+  const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
+
   return (
     <div className="flex-1 space-y-8 p-6">
       {/* Header */}
@@ -201,6 +245,122 @@ const Dashboard = () => {
             </Card>
           ))}
         </div>
+      </div>
+
+      {/* Interactive Charts Section */}
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-semibold">Performance Analytics</h2>
+          <p className="text-muted-foreground mt-1">Interactive insights into your sales performance</p>
+        </div>
+        
+        <div className="grid gap-6 lg:grid-cols-2">
+          {/* Revenue Trend Chart */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Revenue vs Target</CardTitle>
+              <CardDescription>Monthly revenue performance compared to targets</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={revenueData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
+                  <Tooltip 
+                    formatter={(value) => [`$${(value as number).toLocaleString()}`, '']}
+                    labelFormatter={(label) => `Month: ${label}`}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="revenue" 
+                    stroke="#3b82f6" 
+                    strokeWidth={3}
+                    name="Revenue"
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="target" 
+                    stroke="#ef4444" 
+                    strokeWidth={2}
+                    strokeDasharray="5 5"
+                    name="Target"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          {/* Weekly Meetings Chart */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Weekly Meeting Performance</CardTitle>
+              <CardDescription>Daily meeting counts and success rates</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={meetingData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="day" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="meetings" fill="#3b82f6" name="Total Meetings" />
+                  <Bar dataKey="successful" fill="#10b981" name="Successful" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Conversion Funnel Chart */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Sales Conversion Funnel</CardTitle>
+            <CardDescription>Track leads through your sales pipeline</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-6 lg:grid-cols-2">
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={conversionData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {conversionData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+              
+              <div className="space-y-4">
+                {conversionData.map((item, index) => (
+                  <div key={index} className="flex items-center justify-between p-3 rounded-lg border">
+                    <div className="flex items-center space-x-3">
+                      <div 
+                        className="w-4 h-4 rounded-full" 
+                        style={{ backgroundColor: item.color }}
+                      />
+                      <span className="font-medium">{item.name}</span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-2xl font-bold">{item.value}</span>
+                      <p className="text-xs text-muted-foreground">leads</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Quick Actions & Recent Activity */}
