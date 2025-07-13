@@ -143,8 +143,7 @@ const Dashboard = () => {
               <div className="text-2xl font-bold">{kpi.value}</div>
               <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                 <span className={`font-medium ${
-                  kpi.changeType === 'positive' ? 'text-green-600' : 
-                  kpi.changeType === 'negative' ? 'text-red-600' : 'text-gray-600'
+                  kpi.changeType === 'positive' ? 'text-green-600' : 'text-gray-600'
                 }`}>
                   {kpi.change}
                 </span>
