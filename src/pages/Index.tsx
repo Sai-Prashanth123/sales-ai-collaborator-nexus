@@ -36,29 +36,28 @@ const Dashboard = () => {
       description: "This month"
     },
     {
-      title: "AI Suggestions Used",
-      value: "1,247",
-      change: "+8%",
-      changeType: "positive" as const,
-      icon: Brain,
-      description: "This week"
-    },
-    {
       title: "Conversion Rate",
       value: "34%",
       change: "+5%",
       changeType: "positive" as const,
       icon: Users,
       description: "Lead to customer"
+    },
+    {
+      title: "AI Suggestions Used",
+      value: "1,247",
+      change: "+8%",
+      changeType: "positive" as const,
+      icon: Brain,
+      description: "This week"
     }
   ];
 
-  const secondaryKpis = [
+  const keyMetrics = [
     {
       title: "Deals Closed",
       value: "47",
       change: "+23%",
-      changeType: "positive" as const,
       icon: TrendingUp,
       description: "This quarter"
     },
@@ -66,41 +65,15 @@ const Dashboard = () => {
       title: "Pipeline Value",
       value: "$524k",
       change: "+15%",
-      changeType: "positive" as const,
       icon: BarChart3,
       description: "Active opportunities"
-    },
-    {
-      title: "Avg Call Duration",
-      value: "18 min",
-      change: "+2 min",
-      changeType: "positive" as const,
-      icon: Video,
-      description: "Per meeting"
-    },
-    {
-      title: "Follow-up Rate",
-      value: "92%",
-      change: "+7%",
-      changeType: "positive" as const,
-      icon: MessageSquare,
-      description: "Within 24hrs"
     },
     {
       title: "New Leads",
       value: "186",
       change: "+31%",
-      changeType: "positive" as const,
       icon: Users,
       description: "This week"
-    },
-    {
-      title: "Knowledge Base Items",
-      value: "156",
-      change: "+5",
-      changeType: "neutral" as const,
-      icon: BookOpen,
-      description: "Total documents"
     }
   ];
 
@@ -167,89 +140,92 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="flex-1 space-y-6 p-6">
+    <div className="flex-1 space-y-8 p-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Welcome back, John</h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mt-1">
             Here's what's happening with your AI sales assistant today.
           </p>
         </div>
-        <Button>
+        <Button size="lg">
           <Plus className="mr-2 h-4 w-4" />
           New Meeting
         </Button>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {/* Main KPI Cards */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {kpis.map((kpi, index) => (
-          <Card key={index} className="hover:shadow-md transition-shadow">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{kpi.title}</CardTitle>
-              <kpi.icon className="h-4 w-4 text-muted-foreground" />
+          <Card key={index} className="hover:shadow-lg transition-all duration-200">
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm font-medium text-muted-foreground">{kpi.title}</CardTitle>
+                <kpi.icon className="h-5 w-5 text-muted-foreground" />
+              </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{kpi.value}</div>
-              <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-                <span className={`font-medium ${
-                  kpi.changeType === 'positive' ? 'text-green-600' : 'text-gray-600'
-                }`}>
-                  {kpi.change}
-                </span>
-                <span>{kpi.description}</span>
+            <CardContent className="pt-0">
+              <div className="text-3xl font-bold mb-2">{kpi.value}</div>
+              <div className="flex items-center space-x-2 text-sm">
+                <span className="text-green-600 font-medium">{kpi.change}</span>
+                <span className="text-muted-foreground">{kpi.description}</span>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Secondary KPI Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-        {secondaryKpis.map((kpi, index) => (
-          <Card key={index} className="hover:shadow-md transition-shadow">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-xs font-medium">{kpi.title}</CardTitle>
-              <kpi.icon className="h-3 w-3 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-lg font-bold">{kpi.value}</div>
-              <div className="flex items-center space-x-1 text-xs text-muted-foreground">
-                <span className={`font-medium ${
-                  kpi.changeType === 'positive' ? 'text-green-600' : 'text-gray-600'
-                }`}>
-                  {kpi.change}
-                </span>
-                <span>{kpi.description}</span>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+      {/* Key Metrics Section */}
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-semibold">Key Sales Metrics</h2>
+          <p className="text-muted-foreground mt-1">Track your most important performance indicators</p>
+        </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          {keyMetrics.map((metric, index) => (
+            <Card key={index} className="hover:shadow-lg transition-all duration-200">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-lg font-medium">{metric.title}</CardTitle>
+                  <metric.icon className="h-6 w-6 text-muted-foreground" />
+                </div>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="text-3xl font-bold mb-2">{metric.value}</div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-green-600 font-medium">{metric.change}</span>
+                  <span className="text-muted-foreground">{metric.description}</span>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {/* Quick Actions & Recent Activity */}
+      <div className="grid gap-8 lg:grid-cols-3">
         {/* Quick Actions */}
         <Card className="lg:col-span-1">
           <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
+            <CardTitle className="text-xl">Quick Actions</CardTitle>
             <CardDescription>Jump to key features</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-4">
             {quickActions.map((action, index) => (
               <Link
                 key={index}
                 to={action.href}
-                className="flex items-center p-3 rounded-lg border hover:bg-muted/50 transition-colors group"
+                className="flex items-center p-4 rounded-lg border hover:bg-muted/50 transition-colors group"
               >
-                <div className={`p-2 rounded-md ${action.color} mr-3`}>
-                  <action.icon className="h-4 w-4 text-white" />
+                <div className={`p-3 rounded-lg ${action.color} mr-4`}>
+                  <action.icon className="h-5 w-5 text-white" />
                 </div>
                 <div className="flex-1">
-                  <p className="font-medium text-sm">{action.title}</p>
-                  <p className="text-xs text-muted-foreground">{action.description}</p>
+                  <p className="font-medium">{action.title}</p>
+                  <p className="text-sm text-muted-foreground">{action.description}</p>
                 </div>
-                <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+                <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors" />
               </Link>
             ))}
           </CardContent>
@@ -258,31 +234,31 @@ const Dashboard = () => {
         {/* Recent Activity */}
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
+            <CardTitle className="text-xl">Recent Activity</CardTitle>
             <CardDescription>Latest updates from your AI assistant</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {recentActivity.map((activity, index) => (
-                <div key={index} className="flex items-start space-x-3">
-                  <div className={`p-1.5 rounded-full ${
+                <div key={index} className="flex items-start space-x-4">
+                  <div className={`p-2 rounded-full ${
                     activity.type === 'meeting' ? 'bg-blue-100 text-blue-600' :
                     activity.type === 'knowledge' ? 'bg-green-100 text-green-600' :
                     'bg-purple-100 text-purple-600'
                   }`}>
-                    {activity.type === 'meeting' ? <Video className="h-3 w-3" /> :
-                     activity.type === 'knowledge' ? <BookOpen className="h-3 w-3" /> :
-                     <Brain className="h-3 w-3" />}
+                    {activity.type === 'meeting' ? <Video className="h-4 w-4" /> :
+                     activity.type === 'knowledge' ? <BookOpen className="h-4 w-4" /> :
+                     <Brain className="h-4 w-4" />}
                   </div>
                   <div className="flex-1 space-y-1">
-                    <p className="text-sm font-medium">{activity.title}</p>
-                    <div className="flex items-center space-x-2 text-xs text-muted-foreground">
+                    <p className="font-medium">{activity.title}</p>
+                    <div className="flex items-center space-x-3 text-sm text-muted-foreground">
                       <span>{activity.time}</span>
-                      <Badge variant="secondary" className="text-xs">
+                      <Badge variant="secondary">
                         {activity.status}
                       </Badge>
                       {activity.aiSuggestions > 0 && (
-                        <span className="text-blue-600">
+                        <span className="text-blue-600 font-medium">
                           {activity.aiSuggestions} AI suggestions
                         </span>
                       )}
@@ -295,117 +271,41 @@ const Dashboard = () => {
         </Card>
       </div>
 
-      {/* Team Performance & AI Insights */}
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Team Performance</CardTitle>
-            <CardDescription>Sales team metrics this month</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium">Top Performer</p>
-                  <p className="text-xs text-muted-foreground">Sarah Johnson - 23 deals closed</p>
-                </div>
-                <Badge variant="secondary">+15% vs avg</Badge>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium">Team Quota</p>
-                  <p className="text-xs text-muted-foreground">Achievement this quarter</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-bold">127%</p>
-                  <Progress value={127} className="h-2 w-20" />
-                </div>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium">Active Prospects</p>
-                  <p className="text-xs text-muted-foreground">In pipeline</p>
-                </div>
-                <p className="text-sm font-bold">342</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>AI Insights</CardTitle>
-            <CardDescription>Intelligent recommendations</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <div className="p-1.5 rounded-full bg-blue-100 text-blue-600">
-                  <Brain className="h-3 w-3" />
-                </div>
-                <div className="flex-1 space-y-1">
-                  <p className="text-sm font-medium">High-Value Prospect Alert</p>
-                  <p className="text-xs text-muted-foreground">Acme Corp shows strong buying signals - schedule follow-up</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <div className="p-1.5 rounded-full bg-green-100 text-green-600">
-                  <TrendingUp className="h-3 w-3" />
-                </div>
-                <div className="flex-1 space-y-1">
-                  <p className="text-sm font-medium">Objection Pattern</p>
-                  <p className="text-xs text-muted-foreground">Price concerns down 23% with new battlecard</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <div className="p-1.5 rounded-full bg-purple-100 text-purple-600">
-                  <MessageSquare className="h-3 w-3" />
-                </div>
-                <div className="flex-1 space-y-1">
-                  <p className="text-sm font-medium">Best Performing Script</p>
-                  <p className="text-xs text-muted-foreground">"Value-focused opening" has 67% success rate</p>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
       {/* AI Performance Summary */}
       <Card>
         <CardHeader>
-          <CardTitle>AI Assistant Performance</CardTitle>
+          <CardTitle className="text-xl">AI Assistant Performance</CardTitle>
           <CardDescription>Overview of your AI's effectiveness this week</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span>Objection Handling</span>
-                <span className="font-medium">89%</span>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Objection Handling</span>
+                <span className="text-xl font-bold">89%</span>
               </div>
-              <Progress value={89} className="h-2" />
+              <Progress value={89} className="h-3" />
             </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span>Response Accuracy</span>
-                <span className="font-medium">94%</span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Response Accuracy</span>
+                <span className="text-xl font-bold">94%</span>
               </div>
-              <Progress value={94} className="h-2" />
+              <Progress value={94} className="h-3" />
             </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span>Knowledge Usage</span>
-                <span className="font-medium">76%</span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-medium">Knowledge Usage</span>
+                <span className="text-xl font-bold">76%</span>
               </div>
-              <Progress value={76} className="h-2" />
+              <Progress value={76} className="h-3" />
             </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span>User Satisfaction</span>
-                <span className="font-medium">92%</span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-medium">User Satisfaction</span>
+                <span className="text-xl font-bold">92%</span>
               </div>
-              <Progress value={92} className="h-2" />
+              <Progress value={92} className="h-3" />
             </div>
           </div>
         </CardContent>
