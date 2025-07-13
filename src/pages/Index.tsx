@@ -20,6 +20,14 @@ import { Link } from "react-router-dom";
 const Dashboard = () => {
   const kpis = [
     {
+      title: "Revenue This Month",
+      value: "$127k",
+      change: "+18%",
+      changeType: "positive" as const,
+      icon: TrendingUp,
+      description: "vs last month"
+    },
+    {
       title: "Active Meetings",
       value: "24",
       change: "+12%",
@@ -36,20 +44,63 @@ const Dashboard = () => {
       description: "This week"
     },
     {
+      title: "Conversion Rate",
+      value: "34%",
+      change: "+5%",
+      changeType: "positive" as const,
+      icon: Users,
+      description: "Lead to customer"
+    }
+  ];
+
+  const secondaryKpis = [
+    {
+      title: "Deals Closed",
+      value: "47",
+      change: "+23%",
+      changeType: "positive" as const,
+      icon: TrendingUp,
+      description: "This quarter"
+    },
+    {
+      title: "Pipeline Value",
+      value: "$524k",
+      change: "+15%",
+      changeType: "positive" as const,
+      icon: BarChart3,
+      description: "Active opportunities"
+    },
+    {
+      title: "Avg Call Duration",
+      value: "18 min",
+      change: "+2 min",
+      changeType: "positive" as const,
+      icon: Video,
+      description: "Per meeting"
+    },
+    {
+      title: "Follow-up Rate",
+      value: "92%",
+      change: "+7%",
+      changeType: "positive" as const,
+      icon: MessageSquare,
+      description: "Within 24hrs"
+    },
+    {
+      title: "New Leads",
+      value: "186",
+      change: "+31%",
+      changeType: "positive" as const,
+      icon: Users,
+      description: "This week"
+    },
+    {
       title: "Knowledge Base Items",
       value: "156",
       change: "+5",
       changeType: "neutral" as const,
       icon: BookOpen,
       description: "Total documents"
-    },
-    {
-      title: "Success Rate",
-      value: "89%",
-      change: "+3%",
-      changeType: "positive" as const,
-      icon: TrendingUp,
-      description: "Objection handling"
     }
   ];
 
@@ -154,6 +205,29 @@ const Dashboard = () => {
         ))}
       </div>
 
+      {/* Secondary KPI Cards */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        {secondaryKpis.map((kpi, index) => (
+          <Card key={index} className="hover:shadow-md transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-xs font-medium">{kpi.title}</CardTitle>
+              <kpi.icon className="h-3 w-3 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-lg font-bold">{kpi.value}</div>
+              <div className="flex items-center space-x-1 text-xs text-muted-foreground">
+                <span className={`font-medium ${
+                  kpi.changeType === 'positive' ? 'text-green-600' : 'text-gray-600'
+                }`}>
+                  {kpi.change}
+                </span>
+                <span>{kpi.description}</span>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {/* Quick Actions */}
         <Card className="lg:col-span-1">
@@ -216,6 +290,82 @@ const Dashboard = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Team Performance & AI Insights */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Team Performance</CardTitle>
+            <CardDescription>Sales team metrics this month</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="space-y-1">
+                  <p className="text-sm font-medium">Top Performer</p>
+                  <p className="text-xs text-muted-foreground">Sarah Johnson - 23 deals closed</p>
+                </div>
+                <Badge variant="secondary">+15% vs avg</Badge>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="space-y-1">
+                  <p className="text-sm font-medium">Team Quota</p>
+                  <p className="text-xs text-muted-foreground">Achievement this quarter</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-bold">127%</p>
+                  <Progress value={127} className="h-2 w-20" />
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="space-y-1">
+                  <p className="text-sm font-medium">Active Prospects</p>
+                  <p className="text-xs text-muted-foreground">In pipeline</p>
+                </div>
+                <p className="text-sm font-bold">342</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>AI Insights</CardTitle>
+            <CardDescription>Intelligent recommendations</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3">
+                <div className="p-1.5 rounded-full bg-blue-100 text-blue-600">
+                  <Brain className="h-3 w-3" />
+                </div>
+                <div className="flex-1 space-y-1">
+                  <p className="text-sm font-medium">High-Value Prospect Alert</p>
+                  <p className="text-xs text-muted-foreground">Acme Corp shows strong buying signals - schedule follow-up</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="p-1.5 rounded-full bg-green-100 text-green-600">
+                  <TrendingUp className="h-3 w-3" />
+                </div>
+                <div className="flex-1 space-y-1">
+                  <p className="text-sm font-medium">Objection Pattern</p>
+                  <p className="text-xs text-muted-foreground">Price concerns down 23% with new battlecard</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="p-1.5 rounded-full bg-purple-100 text-purple-600">
+                  <MessageSquare className="h-3 w-3" />
+                </div>
+                <div className="flex-1 space-y-1">
+                  <p className="text-sm font-medium">Best Performing Script</p>
+                  <p className="text-xs text-muted-foreground">"Value-focused opening" has 67% success rate</p>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
