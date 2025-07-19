@@ -32,9 +32,44 @@ cd <YOUR_PROJECT_NAME>
 # Step 3: Install the necessary dependencies.
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Start both frontend and backend servers with auto-reloading.
 npm run dev
 ```
+
+## Development Workflow
+
+This project includes both frontend and backend components that run concurrently:
+
+### Quick Start (Recommended)
+```sh
+# Install all dependencies (frontend + backend)
+npm install
+
+# Start both frontend and backend servers
+npm run dev
+```
+
+### Available Scripts
+
+- `npm install` - Installs frontend dependencies and automatically installs backend dependencies
+- `npm run dev` - Starts both frontend (port 5173) and backend servers concurrently
+- `npm run dev:frontend` - Runs only the frontend development server
+- `npm run dev:backend` - Runs only the backend development server  
+- `npm run start` - Alias for `npm run dev`
+- `npm run build` - Builds the frontend for production
+- `npm run build:all` - Builds both frontend and backend
+
+### Project Structure
+
+- `/src` - Frontend React application
+- `/api` - Backend Express.js server with LiveKit integration
+- `/public` - Static assets
+
+The development server will automatically:
+- Install backend dependencies when you run `npm install`
+- Start both frontend (Vite) and backend (Express) servers
+- Auto-reload both servers when files change
+- Display logs with color-coded prefixes for easy debugging
 
 **Edit a file directly in GitHub**
 

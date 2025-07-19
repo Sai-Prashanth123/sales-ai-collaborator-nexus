@@ -4,12 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "postinstall": "cd api && npm install",
+    "install:all": "npm install && cd api && npm install",
     "dev": "concurrently --names \"FRONTEND,BACKEND\" --prefix-colors \"cyan,yellow\" \"npm run dev:frontend\" \"npm run dev:backend\"",
     "dev:frontend": "vite",
-    "dev:backend": "cd api && node server.js",
+    "dev:backend": "cd api && npm run dev",
     "dev:frontend-only": "vite",
+    "start": "npm run dev",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "build:all": "npm run build && cd api && npm run build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
