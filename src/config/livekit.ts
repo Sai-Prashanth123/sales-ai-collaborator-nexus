@@ -1,7 +1,7 @@
 export const LIVEKIT_CONFIG = {
-  wsURL: 'wss://gaap-xh71ra4n.livekit.cloud',
-  apiKey: 'APIYT4h6NUqk4TF',
-  apiSecret: 'eJUnjALM2DEyZKf90BjfPdlfoOikZyIjd6Pf1RtnTqmB',
+  wsURL: import.meta.env.VITE_LIVEKIT_WS_URL || 'wss://gaap-xh71ra4n.livekit.cloud',
+  // Note: apiKey and apiSecret should only be used on the backend for security
+  // Frontend should only need the WebSocket URL for connections
 } as const;
 
 export const MEETING_CONFIG = {

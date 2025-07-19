@@ -9,11 +9,11 @@ const port = 3001;
 app.use(cors());
 app.use(express.json());
 
-// LiveKit configuration
+// LiveKit configuration from environment variables
 const LIVEKIT_CONFIG = {
-  wsURL: 'wss://gaap-xh71ra4n.livekit.cloud',
-  apiKey: 'APIYT4h6NUqk4TF',
-  apiSecret: 'eJUnjALM2DEyZKf90BjfPdlfoOikZyIjd6Pf1RtnTqmB',
+  wsURL: process.env.LIVEKIT_WS_URL || 'wss://gaap-xh71ra4n.livekit.cloud',
+  apiKey: process.env.LIVEKIT_API_KEY || 'APIYT4h6NUqk4TF',
+  apiSecret: process.env.LIVEKIT_API_SECRET || 'eJUnjALM2DEyZKf90BjfPdlfoOikZyIjd6Pf1RtnTqmB',
 };
 
 console.log('🚀 LiveKit Config:', {
@@ -193,9 +193,12 @@ app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-app.listen(port, () => {
-  console.log(`LiveKit API server running at http://localhost:${port}`);
-  console.log(`Health check: http://localhost:${port}/health`);
-});
+// Only start server if not in serverless environment (for local development)
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log(`LiveKit API server running at http://localhost:${port}`);
+    console.log(`Health check: http://localhost:${port}/health`);
+  });
+}
 
 module.exports = app; 

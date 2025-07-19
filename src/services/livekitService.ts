@@ -1,8 +1,10 @@
 import { LIVEKIT_CONFIG, DEV_CONFIG, MEETING_CONFIG } from '@/config/livekit';
 import { Meeting, CreateMeetingRequest, JoinMeetingRequest } from '@/types/meeting';
 
-// API base URL
-const API_BASE_URL = 'http://localhost:3001';
+// API base URL - automatically switches between development and production
+const API_BASE_URL = process.env.NODE_ENV === 'production' 
+  ? '' // In production, API routes are served from the same domain
+  : 'http://localhost:3001'; // Local development server
 
 // Generate a unique room name for meetings
 export const generateRoomName = (meetingId: string): string => {
