@@ -2,6 +2,23 @@
 
 This guide will help you deploy your Sales AI Collaborator application to Vercel with both frontend and backend components.
 
+## 🚨 **QUICK FIX FOR 404 ERRORS**
+
+If you're getting 404 errors after deployment, the configuration has been updated to fix this issue:
+
+1. **Push the latest changes**:
+   ```bash
+   git add .
+   git commit -m "Fix Vercel API routing - remove 404 errors"
+   git push origin main
+   ```
+
+2. **Redeploy**: Vercel will automatically redeploy, or trigger a manual redeploy in the dashboard
+
+3. **Test**: Visit `https://your-app.vercel.app/api/test` - you should see "API Test Endpoint Working!"
+
+**What was fixed**: Removed `/api/` prefix from Express routes since Vercel handles that routing automatically.
+
 ## 🏗️ Architecture Overview
 
 - **Frontend**: React + Vite + TypeScript (deployed as static site)
@@ -135,8 +152,10 @@ Your Express server will be available at:
 - Check navigation between pages
 
 ### 2. Test API Endpoints
-- Test health check: `https://your-app.vercel.app/api/health`
-- Test LiveKit token generation: `https://your-app.vercel.app/api/livekit/token`
+- **Simple test**: `https://your-app.vercel.app/api/test` - Should show "API Test Endpoint Working!"
+- **Health check**: `https://your-app.vercel.app/api/health`
+- **API info**: `https://your-app.vercel.app/api/` - Shows available endpoints
+- **LiveKit token**: `https://your-app.vercel.app/api/livekit/token` (POST request)
 
 ### 3. Test Video Conferencing
 - Create a new meeting
@@ -160,9 +179,13 @@ Your Express server will be available at:
 
 ### Common Issues & Solutions
 
-#### 1. API Routes Not Working
-- **Problem**: Getting 404 for `/api/*` routes
-- **Solution**: Verify `vercel.json` rewrites configuration
+#### 1. API Routes Not Working (404 Errors)
+- **Problem**: Getting 404 for `/api/*` routes like "Failed to load resource: the server responded with a status of 404"
+- **Root Cause**: Vercel serverless functions expect routes without `/api/` prefix in Express app
+- **Solution**: ✅ **FIXED** - Updated configuration:
+  - Express routes now use `/livekit/token` instead of `/api/livekit/token`
+  - Vercel routing handles the `/api/` prefix automatically
+  - Added proper `api/index.js` entry point for serverless functions
 
 #### 2. Environment Variables Not Loading
 - **Problem**: LiveKit connection failing

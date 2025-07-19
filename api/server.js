@@ -26,7 +26,7 @@ console.log('🚀 LiveKit Config:', {
 const meetings = new Map();
 
 // Generate LiveKit token
-app.post('/api/livekit/token', async (req, res) => {
+app.post('/livekit/token', async (req, res) => {
   try {
     const { roomName, participantName, isHost } = req.body;
     
@@ -71,7 +71,7 @@ app.post('/api/livekit/token', async (req, res) => {
 });
 
 // Create LiveKit room
-app.post('/api/livekit/rooms', async (req, res) => {
+app.post('/livekit/rooms', async (req, res) => {
   try {
     const { roomName, maxParticipants } = req.body;
     
@@ -91,7 +91,7 @@ app.post('/api/livekit/rooms', async (req, res) => {
 });
 
 // Create meeting
-app.post('/api/meetings', (req, res) => {
+app.post('/meetings', (req, res) => {
   try {
     const meeting = {
       ...req.body,
@@ -110,7 +110,7 @@ app.post('/api/meetings', (req, res) => {
 });
 
 // Get meeting details
-app.get('/api/meetings/:id', (req, res) => {
+app.get('/meetings/:id', (req, res) => {
   try {
     const { id } = req.params;
     const meeting = meetings.get(id);
@@ -127,7 +127,7 @@ app.get('/api/meetings/:id', (req, res) => {
 });
 
 // Update meeting status
-app.patch('/api/meetings/:id', (req, res) => {
+app.patch('/meetings/:id', (req, res) => {
   try {
     const { id } = req.params;
     const updates = req.body;
@@ -153,7 +153,7 @@ app.patch('/api/meetings/:id', (req, res) => {
 });
 
 // Test endpoint for debugging
-app.get('/api/test-token', async (req, res) => {
+app.get('/test-token', async (req, res) => {
   try {
     console.log('🧪 Test token generation...');
     
@@ -186,6 +186,23 @@ app.get('/api/test-token', async (req, res) => {
     console.error('❌ Test token error:', error);
     res.status(500).json({ error: error.message });
   }
+});
+
+// Root route for API
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Sales AI Collaborator API',
+    status: 'running',
+    timestamp: new Date().toISOString(),
+    endpoints: [
+      '/health',
+      '/livekit/token',
+      '/livekit/rooms',
+      '/meetings',
+      '/meetings/:id',
+      '/test-token'
+    ]
+  });
 });
 
 // Health check
