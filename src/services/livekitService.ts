@@ -14,7 +14,8 @@ export const generateRoomName = (meetingId: string): string => {
 // Generate meeting URL for sharing
 export const generateMeetingUrl = (meetingId: string): string => {
   const baseUrl = window.location.origin;
-  return `${baseUrl}/meetings/${meetingId}/room`;
+  // Participants should go through the join page first
+  return `${baseUrl}/meetings/${meetingId}/join`;
 };
 
 // Generate LiveKit token (calls backend API)

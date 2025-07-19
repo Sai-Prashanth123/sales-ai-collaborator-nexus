@@ -93,7 +93,17 @@ const VideoConferenceRoom = () => {
       
       // Generate LiveKit token
       const roomName = generateRoomName(meetingId);
-      const participantName = isHost ? "Host" : "Participant";
+      
+      // Get participant name from session storage or use default
+      const storedName = sessionStorage.getItem("participantName");
+      const participantName = isHost ? "Host" : (storedName || "Participant");
+      
+      // If not host and no name stored, redirect to join page
+      if (!isHost && !storedName) {
+        navigate(`/meetings/${meetingId}/join`);
+        return;
+      }
+      
       const livekitToken = await generateLivekitToken(roomName, participantName, isHost);
       setToken(livekitToken);
       
@@ -127,10 +137,12 @@ const VideoConferenceRoom = () => {
 
   const copyMeetingLink = () => {
     if (meeting) {
-      navigator.clipboard.writeText(meeting.meetingUrl);
+      // Generate the join URL for participants
+      const joinUrl = `${window.location.origin}/meetings/${meetingId}/join`;
+      navigator.clipboard.writeText(joinUrl);
       toast({
         title: "Link copied!",
-        description: "Meeting link has been copied to clipboard.",
+        description: "Meeting link has been copied to clipboard. Share this with participants.",
       });
     }
   };

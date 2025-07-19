@@ -4,20 +4,33 @@ This guide will help you deploy your Sales AI Collaborator application to Vercel
 
 ## 🚨 **QUICK FIX FOR 404 ERRORS**
 
-If you're getting 404 errors after deployment, the configuration has been updated to fix this issue:
+### **API 404 Errors - FIXED ✅**
+If you're getting API 404 errors, the configuration has been updated:
 
 1. **Push the latest changes**:
    ```bash
    git add .
-   git commit -m "Fix Vercel API routing - remove 404 errors"
+   git commit -m "Fix Vercel API routing and meeting join flow"
    git push origin main
    ```
 
-2. **Redeploy**: Vercel will automatically redeploy, or trigger a manual redeploy in the dashboard
+2. **Redeploy**: Vercel will automatically redeploy
 
 3. **Test**: Visit `https://your-app.vercel.app/api/test` - you should see "API Test Endpoint Working!"
 
-**What was fixed**: Removed `/api/` prefix from Express routes since Vercel handles that routing automatically.
+### **Meeting Join Flow - FIXED ✅**
+The meeting join flow has been updated to fix participant joining issues:
+
+1. **Host starts meeting**: Click "Start" → Goes directly to video room
+2. **Participants join**: 
+   - Copy meeting link → `https://your-app.vercel.app/meetings/{id}/join`
+   - Enter their name → Join the video room
+   - No more 404 errors!
+
+**What was fixed**: 
+- Removed `/api/` prefix from Express routes
+- Added join meeting page for participants
+- Updated URL generation to use join page
 
 ## 🏗️ Architecture Overview
 

@@ -12,6 +12,7 @@ import KnowledgeBase from "./pages/KnowledgeBase";
 import AIConfiguration from "./pages/AIConfiguration";
 import Meetings from "./pages/Meetings";
 import VideoConferenceRoom from "./pages/VideoConferenceRoom";
+import JoinMeeting from "./pages/JoinMeeting";
 import TranscriptView from "./pages/TranscriptView";
 import Analytics from "./pages/Analytics";
 import UserManagement from "./pages/UserManagement";
@@ -30,6 +31,7 @@ const App = () => (
             <Routes>
               {/* Video Conference Room - Full Screen Layout */}
               <Route path="/meetings/:meetingId/room" element={<VideoConferenceRoom />} />
+              <Route path="/meetings/:meetingId/join" element={<JoinMeeting />} />
               
               {/* Regular App Layout */}
               <Route path="*" element={
